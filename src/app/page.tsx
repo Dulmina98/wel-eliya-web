@@ -156,19 +156,18 @@ const WelEliyaHomepage: React.FC = () => {
     <div className="min-h-screen bg-[#F5EFE3] text-[#0E0B08] font-sans selection:bg-[#1B4332] selection:text-white">
 
       {/* ─── NAVIGATION ─── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-[#F5EFE3]/96 backdrop-blur-md border-b border-[#0E0B08]/8' : 'bg-transparent'
-      }`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#F5EFE3]/96 backdrop-blur-md border-b border-[#0E0B08]/8' : 'bg-transparent'
+        }`}>
         <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
 
           {/* Logo */}
           <div>
-            <p className={`font-serif italic text-2xl leading-none transition-colors ${scrolled ? 'text-[#1B4332]' : 'text-white'}`}>
-              Wel Eliya
-            </p>
-            <p className={`text-[9px] tracking-[0.35em] uppercase leading-none mt-0.5 transition-colors ${scrolled ? 'text-[#4A3728]/50' : 'text-white/50'}`}>
-              Garden Dining · Matara
-            </p>
+            <img
+              src="/logo.svg"
+              alt="Wel Eliya"
+              className="h-10 transition-all duration-500"
+              style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
+            />
           </div>
 
           {/* Desktop nav links */}
@@ -188,11 +187,10 @@ const WelEliyaHomepage: React.FC = () => {
           <div className="hidden md:flex">
             <button
               onClick={() => scrollToSection('contact')}
-              className={`text-[11px] tracking-[0.22em] uppercase px-6 py-2.5 border transition-all ${
-                scrolled
-                  ? 'border-[#1B4332] text-[#1B4332] hover:bg-[#1B4332] hover:text-white'
-                  : 'border-white/60 text-white hover:bg-white/10'
-              }`}
+              className={`text-[11px] tracking-[0.22em] uppercase px-6 py-2.5 border transition-all ${scrolled
+                ? 'border-[#1B4332] text-[#1B4332] hover:bg-[#1B4332] hover:text-white'
+                : 'border-white/60 text-white hover:bg-white/10'
+                }`}
             >
               Reserve
             </button>
@@ -611,8 +609,12 @@ const WelEliyaHomepage: React.FC = () => {
           {/* Top grid */}
           <div className="grid md:grid-cols-4 gap-12 pb-14 border-b border-white/8">
             <div className="md:col-span-1">
-              <p className="font-serif italic text-2xl text-white mb-1">Wel Eliya</p>
-              <p className="text-[9px] tracking-[0.35em] uppercase text-white/25 mb-6">Garden Dining · Matara</p>
+              <img
+                src="/logo.svg"
+                alt="Wel Eliya"
+                className="h-16 mb-2 opacity-75"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
               <p className="text-white/35 text-sm font-light leading-relaxed">
                 A private garden retreat where rustic comfort meets open-sky dining.
               </p>
@@ -662,9 +664,6 @@ const WelEliyaHomepage: React.FC = () => {
           <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-[10px] text-white/18 tracking-[0.3em] uppercase">
               © {new Date().getFullYear()} Wel Eliya · All rights reserved
-            </p>
-            <p className="text-[10px] text-white/18 tracking-[0.2em] uppercase">
-              Garden Dining · Matara, Sri Lanka
             </p>
           </div>
         </div>
