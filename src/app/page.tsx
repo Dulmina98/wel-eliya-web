@@ -47,6 +47,7 @@ interface MenuItem {
 interface GalleryImage {
   url: string;
   caption: string;
+  className?: string;
 }
 
 interface Review {
@@ -60,22 +61,22 @@ const experiences: ExperienceCard[] = [
   {
     title: "Pathway to Paradise",
     description: "Watch the sky change colors from the comfort of your private pod.",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0202128?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/highlights/wmremove-transformed%20(2)%203.jpg"
   },
   {
     title: "Al Fresco Evenings",
     description: "Pull up a chair and unwind. We'll handle the food and the mood.",
-    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/highlights/Mask%20group-1.jpg"
   },
   {
     title: "Rustic Comfort",
     description: "Brick walls, wooden tables, and fresh air. The perfect setting for a relaxing meal.",
-    image: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/highlights/Mask%20group-2.jpg"
   },
   {
     title: "Your Private Retreat",
     description: "A quiet corner for you and your favorite people, right in the heart of nature.",
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/highlights/Mask%20group.jpg"
   }
 ];
 
@@ -107,12 +108,11 @@ const menuItems: MenuItem[] = [
 ];
 
 const galleryImages: GalleryImage[] = [
-  { url: "https://images.unsplash.com/photo-1519225421980-715cb0202128?auto=format&fit=crop&w=800&q=80", caption: "Garden at Dusk" },
-  { url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80", caption: "Bathed in Gold" },
-  { url: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80", caption: "Unwind" },
-  { url: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=80", caption: "Rustic Table" },
-  { url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80", caption: "Private Pods" },
-  { url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80", caption: "Evening Light" }
+  { url: "/assets/images/gallery/Mask group.jpg", caption: "Wel Eliya Ambiance" },
+  { url: "/assets/images/gallery/Mask group-1.jpg", caption: "Garden Setup" },
+  { url: "/assets/images/gallery/Mask group-2.jpg", caption: "Dining Area", className: "object-center" },
+  { url: "/assets/images/gallery/Mask group-3.jpg", caption: "Evening Vibes", className: "object-center" },
+  { url: "/assets/images/gallery/Mask group-5.jpg", caption: "Wel Eliya Special", className: "object-center" }
 ];
 
 const reviews: Review[] = [
@@ -529,7 +529,7 @@ const WelEliyaHomepage: React.FC = () => {
                 <img
                   src={img.url}
                   alt={img.caption}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${img.className || ''}`}
                 />
                 {/* Dark vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0E0B08]/70 via-transparent to-[#0E0B08]/20" />
