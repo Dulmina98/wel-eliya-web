@@ -137,12 +137,37 @@ const reviews: Review[] = [
 const WelEliyaHomepage: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const totalSlides = galleryImages.length;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Auto-advance carousel every 4s, pause on hover
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % totalSlides);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isPaused, totalSlides]);
+
+  const prevSlide = () => setActiveSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  const nextSlide = () => setActiveSlide((prev) => (prev + 1) % totalSlides);
+
+  // Touch swipe handling
+  const touchStartX = React.useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) delta > 0 ? nextSlide() : prevSlide();
+    touchStartX.current = null;
+  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -165,7 +190,7 @@ const WelEliyaHomepage: React.FC = () => {
             <img
               src="/logo.svg"
               alt="Wel Eliya"
-              className="h-10 transition-all duration-500"
+              className="h-14 transition-all duration-500"
               style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
             />
           </div>
@@ -471,32 +496,105 @@ const WelEliyaHomepage: React.FC = () => {
         </div>
       </section>
 
-      {/* ─── GALLERY ─── */}
-      <section id="gallery" className="py-24 bg-[#0E0B08] overflow-hidden">
-        <div className="px-6 mb-12 max-w-7xl mx-auto">
-          <p className="text-[10px] tracking-[0.45em] uppercase text-white/25 mb-3">— Gallery —</p>
-          <h2 className="font-serif italic text-4xl md:text-5xl text-white">A Peek Into Paradise</h2>
+      {/* ─── GALLERY CAROUSEL ─── */}
+      <section id="gallery" className="py-24 bg-[#0E0B08]">
+        {/* Header */}
+        <div className="px-6 mb-12 max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] tracking-[0.45em] uppercase text-white/25 mb-3">— Gallery —</p>
+            <h2 className="font-serif italic text-4xl md:text-5xl text-white">A Peek Into Paradise</h2>
+          </div>
+          {/* Slide counter */}
+          <p className="text-[11px] tracking-[0.3em] uppercase text-white/25 font-light">
+            {String(activeSlide + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+          </p>
         </div>
 
-        {/* 1px gap horizontal scroll */}
-        <div className="flex gap-px overflow-x-auto pb-0 pl-6 snap-x scrollbar-hide">
-          {galleryImages.map((img, idx) => (
-            <div key={idx} className="flex-shrink-0 w-72 md:w-96 snap-start">
-              <div className="aspect-[4/3] overflow-hidden relative group">
+        {/* Carousel viewport */}
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Slides — absolute stacked, crossfade */}
+          <div className="relative aspect-[16/9] md:aspect-[21/9]">
+            {galleryImages.map((img, idx) => (
+              <div
+                key={idx}
+                className={`absolute inset-0 transition-opacity duration-500 ${idx === activeSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+              >
                 <img
                   src={img.url}
                   alt={img.caption}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale-[40%] group-hover:grayscale-0"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-[#0E0B08]/0 group-hover:bg-[#0E0B08]/15 transition-colors duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#0E0B08]/75 to-transparent">
-                  <p className="text-white/60 font-light text-[10px] tracking-[0.3em] uppercase">{img.caption}</p>
+                {/* Dark vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E0B08]/70 via-transparent to-[#0E0B08]/20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0E0B08]/40 via-transparent to-[#0E0B08]/40" />
+
+                {/* Caption */}
+                <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-12 flex items-end justify-between">
+                  <p className="font-serif italic text-2xl md:text-3xl text-white/90 leading-snug">
+                    {img.caption}
+                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-          {/* Trailing space */}
-          <div className="flex-shrink-0 w-6" />
+            ))}
+          </div>
+
+          {/* Prev / Next arrows */}
+          <button
+            onClick={prevSlide}
+            aria-label="Previous image"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-white/25 text-white/60 hover:border-white/70 hover:text-white flex items-center justify-center transition-all duration-200 hover:bg-white/8"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M10 3L5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            onClick={nextSlide}
+            aria-label="Next image"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-white/25 text-white/60 hover:border-white/70 hover:text-white flex items-center justify-center transition-all duration-200 hover:bg-white/8"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Dot indicators + progress bar */}
+        <div className="px-6 mt-8 max-w-7xl mx-auto">
+          {/* Progress bar */}
+          <div className="w-full h-px bg-white/10 mb-6 overflow-hidden">
+            <div
+              className="h-full bg-white/40 transition-all duration-500"
+              style={{ width: `${((activeSlide + 1) / totalSlides) * 100}%` }}
+            />
+          </div>
+
+          {/* Dots + thumbnail strip */}
+          <div className="flex items-center gap-3">
+            {galleryImages.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`relative overflow-hidden transition-all duration-300 flex-shrink-0 ${idx === activeSlide
+                  ? 'w-16 h-10 opacity-100'
+                  : 'w-8 h-8 opacity-30 hover:opacity-60'
+                  }`}
+              >
+                <img src={img.url} alt={img.caption} className="w-full h-full object-cover" />
+                {idx === activeSlide && (
+                  <div className="absolute inset-0 border border-white/50" />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
