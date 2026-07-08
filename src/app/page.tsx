@@ -183,7 +183,7 @@ const WelEliyaHomepage: React.FC = () => {
       {/* ─── NAVIGATION ─── */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#F5EFE3]/96 backdrop-blur-md border-b border-[#0E0B08]/8' : 'bg-transparent'
         }`}>
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
 
           {/* Logo */}
           <div>
@@ -256,9 +256,9 @@ const WelEliyaHomepage: React.FC = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1920&q=80"
+            src="/assets/images/hero.jpg"
             alt="Wel Eliya Garden Dining"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-bottom"
           />
           <div className="absolute inset-0 bg-[#0E0B08]/68" />
         </div>
@@ -268,21 +268,21 @@ const WelEliyaHomepage: React.FC = () => {
         <div className="absolute inset-5 md:inset-9 border border-white/6 pointer-events-none" />
 
         {/* Hero content */}
-        <div className="relative z-10 text-center px-8 pt-20 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-8 pt-20 max-w-4xl mx-auto flex flex-col items-center">
           <p className="text-[10px] text-white/40 tracking-[0.5em] uppercase mb-10">
             Unala · Palatuwa · Matara
           </p>
 
-          {/* Ornamental rule */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <div className="w-20 h-px bg-white/25" />
-            <div className="w-2 h-2 border border-white/35 rotate-45" />
-            <div className="w-20 h-px bg-white/25" />
-          </div>
+          <img
+            src="/logo.svg"
+            alt="Wel Eliya"
+            className="h-24 md:h-32 mb-8 opacity-90 transition-all duration-700 hover:scale-105"
+            style={{ filter: 'brightness(0) invert(1)' }}
+          />
 
-          <h1 className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-[110px] text-white leading-[0.88] mb-8">
-            We Are<br />
-            <em className="text-[#D9CCB9] not-italic italic">Open.</em>
+          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[90px] text-white leading-[0.95] mb-8">
+            Taste the <br />
+            <em className="text-[#D9CCB9] not-italic italic">Tranquility.</em>
           </h1>
 
           <div className="flex items-center justify-center gap-4 mb-8">
@@ -291,11 +291,11 @@ const WelEliyaHomepage: React.FC = () => {
             <div className="w-20 h-px bg-white/25" />
           </div>
 
-          <p className="text-white/55 text-base md:text-lg font-light tracking-wide max-w-sm mx-auto mb-12 leading-relaxed">
-            A front-row seat to nature, paired with food made just for you.
+          <p className="text-white/55 text-base md:text-lg font-light tracking-wide max-w-lg mx-auto mb-12 leading-relaxed">
+            Escape the ordinary. Experience culinary craftsmanship in a serene garden setting under the open sky.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center w-full">
             <button
               onClick={() => scrollToSection('contact')}
               className="bg-[#1B4332] text-white px-10 py-4 text-[11px] tracking-[0.28em] uppercase font-medium hover:bg-[#2D6A4F] transition"
@@ -689,13 +689,19 @@ const WelEliyaHomepage: React.FC = () => {
             </div>
           </div>
 
-          {/* Map placeholder */}
+          {/* Google Maps Embed */}
           <div className="aspect-square md:aspect-auto md:h-[580px] bg-[#E8E0D5] overflow-hidden relative border border-[#0E0B08]/10">
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-[#1B4332]/25 p-8 text-center">
-              <MapPin size={36} className="mb-4" />
-              <p className="text-xs tracking-[0.3em] uppercase font-light mb-2">Google Map</p>
-              <p className="text-[11px] text-[#4A3728]/35">Replace with Google Maps embed</p>
-            </div>
+            <iframe
+              src="https://www.google.com/maps?q=Wel+Eliya+Family+Restaurant,+Matara&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Wel Eliya Location"
+              className="absolute inset-0"
+            />
           </div>
         </div>
       </section>
