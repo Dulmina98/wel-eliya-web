@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Clock, MapPin, Phone, ChevronDown, Menu, X,
+  Clock, MapPin, Phone, ChevronDown,
   ArrowRight, Star
 } from 'lucide-react';
+import { Navbar, NavItem } from '../components/Navbar';
 
 // Social icons (not in lucide-react v1.23)
 const InstagramIcon = ({ size = 18 }: { size?: number }) => (
@@ -135,17 +136,18 @@ const reviews: Review[] = [
 
 // --- Component ---
 const WelEliyaHomepage: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const totalSlides = galleryImages.length;
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  
+  const navItems: NavItem[] = [
+    { label: 'Our Story', href: '/about' },
+    { label: 'experience', sectionId: 'experience' },
+    { label: 'menu', sectionId: 'menu' },
+    { label: 'gallery', sectionId: 'gallery' },
+    { label: 'contact', sectionId: 'contact' }
+  ];
+  const reserveAction: NavItem = { label: 'Reserve', sectionId: 'contact' };
 
   // Auto-advance carousel every 4s, pause on hover
   useEffect(() => {
@@ -173,7 +175,6 @@ const WelEliyaHomepage: React.FC = () => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
     }
   };
 
@@ -181,76 +182,7 @@ const WelEliyaHomepage: React.FC = () => {
     <div className="min-h-screen bg-[#F5EFE3] text-[#0E0B08] font-sans selection:bg-[#1B4332] selection:text-white">
 
       {/* ─── NAVIGATION ─── */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-[#F5EFE3]/96 backdrop-blur-md border-b border-[#0E0B08]/8' : 'bg-transparent'
-        }`}>
-        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-
-          {/* Logo */}
-          <div>
-            <img
-              src="/logo.svg"
-              alt="Wel Eliya"
-              className="h-14 transition-all duration-500"
-              style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
-            />
-          </div>
-
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-10">
-            {['about', 'experience', 'menu', 'gallery', 'contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className={`text-[11px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-50 ${scrolled ? 'text-[#0E0B08]' : 'text-white'}`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-
-          {/* Reserve — thin border, no pill */}
-          <div className="hidden md:flex">
-            <button
-              onClick={() => scrollToSection('contact')}
-              className={`text-[11px] tracking-[0.22em] uppercase px-6 py-2.5 border transition-all ${scrolled
-                ? 'border-[#1B4332] text-[#1B4332] hover:bg-[#1B4332] hover:text-white'
-                : 'border-white/60 text-white hover:bg-white/10'
-                }`}
-            >
-              Reserve
-            </button>
-          </div>
-
-          {/* Mobile toggle */}
-          <button
-            className={`md:hidden transition-colors ${scrolled ? 'text-[#0E0B08]' : 'text-white'}`}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-[#F5EFE3] border-t border-[#0E0B08]/10 px-6 py-8 space-y-6">
-            {['about', 'experience', 'menu', 'gallery', 'contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item)}
-                className="block w-full text-left text-[11px] tracking-[0.22em] uppercase text-[#0E0B08]/60 hover:text-[#1B4332] transition"
-              >
-                {item}
-              </button>
-            ))}
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="w-full border border-[#1B4332] text-[#1B4332] py-3.5 text-[11px] tracking-[0.22em] uppercase mt-2 hover:bg-[#1B4332] hover:text-white transition"
-            >
-              Reserve Your Table
-            </button>
-          </div>
-        )}
-      </nav>
+      <Navbar items={navItems} reserveAction={reserveAction} />
 
       {/* ─── HERO ─── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -357,6 +289,14 @@ const WelEliyaHomepage: React.FC = () => {
             Whether it&apos;s a sunset overlooking the fields or a quiet evening under fairy lights,
             every table here is set for a moment worth savoring.
           </p>
+          <div className="mt-8">
+            <a
+              href="/about"
+              className="inline-block border border-[#1B4332] text-[#1B4332] px-8 py-3.5 text-[11px] tracking-[0.28em] uppercase hover:bg-[#1B4332] hover:text-white transition"
+            >
+              Read Our Story
+            </a>
+          </div>
           <Ornament className="max-w-[180px] mx-auto mt-10" />
         </div>
       </section>
@@ -731,6 +671,11 @@ const WelEliyaHomepage: React.FC = () => {
             <div>
               <h4 className="text-[9px] tracking-[0.35em] uppercase text-white/25 mb-6">Navigate</h4>
               <ul className="space-y-3">
+                <li>
+                  <a href="/about" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">
+                    Our Story
+                  </a>
+                </li>
                 {['menu', 'gallery', 'contact'].map((item) => (
                   <li key={item}>
                     <button
