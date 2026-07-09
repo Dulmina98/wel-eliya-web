@@ -132,12 +132,12 @@ function useScrollReveal() {
 export default function AboutPage() {
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
-    { label: 'experience', sectionId: 'experience' },
-    { label: 'menu', sectionId: 'menu' },
-    { label: 'gallery', sectionId: 'gallery' },
-    { label: 'contact', sectionId: 'contact' }
+    { label: 'experience', href: '/#experience' },
+    { label: 'menu', href: '/#menu' },
+    { label: 'gallery', href: '/#gallery' },
+    { label: 'contact', href: '/contact' }
   ];
-  const reserveAction: NavItem = { label: 'Reserve', sectionId: 'contact' };
+  const reserveAction: NavItem = { label: 'Reserve', href: '/contact' };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -519,13 +519,9 @@ export default function AboutPage() {
               <h4 className="text-[9px] tracking-[0.35em] uppercase text-white/25 mb-6">Navigate</h4>
               <ul className="space-y-3">
                 <li><a href="/" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Home</a></li>
-                {['menu', 'gallery', 'contact'].map((item) => (
-                  <li key={item}>
-                    <button onClick={() => scrollToSection(item)} className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">
-                      {item}
-                    </button>
-                  </li>
-                ))}
+                <li><a href="/#menu" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Menu</a></li>
+                <li><a href="/#gallery" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Gallery</a></li>
+                <li><a href="/contact" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Contact</a></li>
               </ul>
             </div>
 
@@ -540,12 +536,12 @@ export default function AboutPage() {
 
             <div>
               <h4 className="text-[9px] tracking-[0.35em] uppercase text-white/25 mb-6">Reserve</h4>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="border border-white/20 text-white text-[11px] tracking-[0.25em] uppercase px-6 py-3 hover:bg-white/8 transition w-full"
+              <a
+                href="/contact"
+                className="block text-center border border-white/20 text-white text-[11px] tracking-[0.25em] uppercase px-6 py-3 hover:bg-white/8 transition w-full"
               >
                 Book a Table
-              </button>
+              </a>
             </div>
           </div>
 

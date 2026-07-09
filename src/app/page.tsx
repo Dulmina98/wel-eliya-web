@@ -139,15 +139,15 @@ const WelEliyaHomepage: React.FC = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const totalSlides = galleryImages.length;
-  
+
   const navItems: NavItem[] = [
     { label: 'Our Story', href: '/about' },
     { label: 'experience', sectionId: 'experience' },
     { label: 'menu', sectionId: 'menu' },
     { label: 'gallery', sectionId: 'gallery' },
-    { label: 'contact', sectionId: 'contact' }
+    { label: 'contact', href: '/contact' }
   ];
-  const reserveAction: NavItem = { label: 'Reserve', sectionId: 'contact' };
+  const reserveAction: NavItem = { label: 'Reserve', href: '/contact' };
 
   // Auto-advance carousel every 4s, pause on hover
   useEffect(() => {
@@ -676,16 +676,9 @@ const WelEliyaHomepage: React.FC = () => {
                     Our Story
                   </a>
                 </li>
-                {['menu', 'gallery', 'contact'].map((item) => (
-                  <li key={item}>
-                    <button
-                      onClick={() => scrollToSection(item)}
-                      className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide"
-                    >
-                      {item}
-                    </button>
-                  </li>
-                ))}
+                <li><button onClick={() => scrollToSection('menu')} className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Menu</button></li>
+                <li><button onClick={() => scrollToSection('gallery')} className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Gallery</button></li>
+                <li><a href="/contact" className="text-sm text-white/40 hover:text-white/80 transition font-light capitalize tracking-wide">Contact</a></li>
               </ul>
             </div>
 
@@ -700,12 +693,12 @@ const WelEliyaHomepage: React.FC = () => {
 
             <div>
               <h4 className="text-[9px] tracking-[0.35em] uppercase text-white/25 mb-6">Reserve</h4>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="border border-white/20 text-white text-[11px] tracking-[0.25em] uppercase px-6 py-3 hover:bg-white/8 transition w-full"
+              <a
+                href="/contact"
+                className="block text-center border border-white/20 text-white text-[11px] tracking-[0.25em] uppercase px-6 py-3 hover:bg-white/8 transition w-full"
               >
                 Book a Table
-              </button>
+              </a>
             </div>
           </div>
 
