@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { MapPin, Clock, Phone, Mail, Send, CheckCircle, ArrowUpRight, Instagram, Facebook } from 'lucide-react';
+import { MapPin, Clock, Phone, Mail, Send, CheckCircle, ArrowUpRight } from 'lucide-react';
 import { Navbar, NavItem } from '../../components/Navbar';
 
 // ─── Shared Icons ───
