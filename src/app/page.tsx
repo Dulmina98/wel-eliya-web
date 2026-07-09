@@ -142,7 +142,7 @@ const WelEliyaHomepage: React.FC = () => {
 
   const navItems: NavItem[] = [
     { label: 'Our Story', href: '/about' },
-    { label: 'experience', sectionId: 'experience' },
+    { label: 'events', href: '/events' },
     { label: 'menu', sectionId: 'menu' },
     { label: 'gallery', sectionId: 'gallery' },
     { label: 'contact', href: '/contact' }

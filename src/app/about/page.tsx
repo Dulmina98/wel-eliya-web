@@ -132,7 +132,7 @@ function useScrollReveal() {
 export default function AboutPage() {
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
-    { label: 'experience', href: '/#experience' },
+    { label: 'events', href: '/events' },
     { label: 'menu', href: '/#menu' },
     { label: 'gallery', href: '/#gallery' },
     { label: 'contact', href: '/contact' }

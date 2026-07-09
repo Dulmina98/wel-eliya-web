@@ -123,7 +123,7 @@ export default function ContactPage() {
   const navItems: NavItem[] = [
     { label: 'Home', href: '/' },
     { label: 'Our Story', href: '/about' },
-    { label: 'experience', href: '/#experience' },
+    { label: 'events', href: '/events' },
     { label: 'menu', href: '/#menu' },
     { label: 'gallery', href: '/#gallery' },
     { label: 'contact', sectionId: 'contact' }
